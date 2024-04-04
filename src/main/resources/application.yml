@@ -27,7 +27,9 @@ mybatis-plus:
       logic-delete-value: 1 # \u903B\u8F91\u5DF2\u5220\u9664\u503C\uFF08\u9ED8\u8BA4\u4E3A 1\uFF09
       logic-not-delete-value: 0 # \u903B\u8F91\u672A\u5220\u9664\u503C\uFF08\u9ED8\u8BA4\u4E3A 0\uFF09
       id-type: assign_id
-
-
+jays:
+  client:
+    access-key: jays
+    secret-key: abcd
 
 

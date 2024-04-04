@@ -3,16 +3,14 @@ package com.example.apiplatform.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.apiplatform.annotation.AuthCheck;
-import com.example.apiplatform.common.BaseResponse;
-import com.example.apiplatform.common.DeleteRequest;
-import com.example.apiplatform.common.ErrorCode;
-import com.example.apiplatform.common.ResultUtils;
+import com.example.apiplatform.common.*;
 import com.example.apiplatform.constant.CommonConstant;
 import com.example.apiplatform.domain.InterfaceInfo;
 import com.example.apiplatform.domain.User;
 import com.example.apiplatform.domain.dto.interfaceinfo.InterfaceInfoAddRequest;
 import com.example.apiplatform.domain.dto.interfaceinfo.InterfaceInfoQueryRequest;
 import com.example.apiplatform.domain.dto.interfaceinfo.InterfaceInfoUpdateRequest;
+import com.example.apiplatform.domain.enums.InterfaceInfoStatusEnum;
 import com.example.apiplatform.exception.BusinessException;
 import com.example.apiplatform.service.InterfaceInfoService;
 import com.example.apiplatform.service.UserService;
@@ -195,5 +193,70 @@ public class InterfaceInfoController {
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC), sortField);
         Page<InterfaceInfo> interfaceInfoPage = interfaceInfoService.page(new Page<>(current, size), queryWrapper);
         return ResultUtils.success(interfaceInfoPage);
+    }
+
+    //发布下线，调试
+    /**
+     * 发布
+     *
+     * @param idRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/online")
+    @AuthCheck(mustRole = "admin")
+    public BaseResponse<Boolean> onlineInterfaceInfo(@RequestBody IdRequest idRequest,
+                                                     HttpServletRequest request) {
+        if (idRequest == null || idRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        long id = idRequest.getId();
+        // 判断是否存在
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        // 判断该接口是否可以调用
+//        com.jays.jaysapiclientsdk.model.User user = new com.jays.jaysapiclientsdk.model.User();
+        com.jays.model.User user = new com.jays.model.User();
+        user.setUserName("test");
+        String username = jaysApiClient.getUserNameByPost(user);
+        if (StringUtils.isBlank(username)) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "接口验证失败");
+        }
+        // 仅本人或管理员可修改
+        InterfaceInfo interfaceInfo = new InterfaceInfo();
+        interfaceInfo.setId(id);
+        interfaceInfo.setStatus(InterfaceInfoStatusEnum.ONLINE.getValue());
+        boolean result = interfaceInfoService.updateById(interfaceInfo);
+        return ResultUtils.success(result);
+    }
+
+    /**
+     * 下线
+     *
+     * @param idRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/offline")
+    @AuthCheck(mustRole = "admin")
+    public BaseResponse<Boolean> offlineInterfaceInfo(@RequestBody IdRequest idRequest,
+                                                      HttpServletRequest request) {
+        if (idRequest == null || idRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        long id = idRequest.getId();
+        // 判断是否存在
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        // 仅本人或管理员可修改
+        InterfaceInfo interfaceInfo = new InterfaceInfo();
+        interfaceInfo.setId(id);
+        interfaceInfo.setStatus(InterfaceInfoStatusEnum.OFFLINE.getValue());
+        boolean result = interfaceInfoService.updateById(interfaceInfo);
+        return ResultUtils.success(result);
     }
 }
