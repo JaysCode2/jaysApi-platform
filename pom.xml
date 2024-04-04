@@ -72,6 +72,13 @@
             <artifactId>redisson</artifactId>
             <version>3.15.5</version>
         </dependency>
+
+        <!--我自己本地仓库的自定义sdk-->
+        <dependency>
+            <groupId>com.jays</groupId>
+            <artifactId>jaysApi-client-sdk</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
