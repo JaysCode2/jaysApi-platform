@@ -1,5 +1,6 @@
 package com.example.apiplatform.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.apiplatform.annotation.AuthCheck;
@@ -8,13 +9,16 @@ import com.example.apiplatform.constant.CommonConstant;
 import com.example.apiplatform.domain.InterfaceInfo;
 import com.example.apiplatform.domain.User;
 import com.example.apiplatform.domain.dto.interfaceinfo.InterfaceInfoAddRequest;
+import com.example.apiplatform.domain.dto.interfaceinfo.InterfaceInfoInvokeRequest;
 import com.example.apiplatform.domain.dto.interfaceinfo.InterfaceInfoQueryRequest;
 import com.example.apiplatform.domain.dto.interfaceinfo.InterfaceInfoUpdateRequest;
 import com.example.apiplatform.domain.enums.InterfaceInfoStatusEnum;
 import com.example.apiplatform.exception.BusinessException;
 import com.example.apiplatform.service.InterfaceInfoService;
 import com.example.apiplatform.service.UserService;
+import com.google.gson.Gson;
 import com.jays.client.JaysApiClient;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequestMapping("/interfaceInfo")
 public class InterfaceInfoController {
     @Resource
@@ -258,5 +263,44 @@ public class InterfaceInfoController {
         interfaceInfo.setStatus(InterfaceInfoStatusEnum.OFFLINE.getValue());
         boolean result = interfaceInfoService.updateById(interfaceInfo);
         return ResultUtils.success(result);
+    }
+
+    /**
+     * 测试调用
+     *
+     * @param interfaceInfoInvokeRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/invoke")
+    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest,
+                                                    HttpServletRequest request) {
+        if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        long id = interfaceInfoInvokeRequest.getId();
+        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
+        // 判断是否存在
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        if (oldInterfaceInfo.getStatus() == InterfaceInfoStatusEnum.OFFLINE.getValue()) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "接口已关闭");
+        }
+        User loginUser = userService.getLoginUser(request);
+        String accessKey = loginUser.getAccessKey();
+        String secretKey = loginUser.getSecretKey();
+//        JaysApiClient tempClient = new JaysApiClient(accessKey, secretKey);
+        JaysApiClient tempClient = new JaysApiClient("jays", "abcd");
+        //gson可以，hutool也可以
+        Gson gson = new Gson();
+        com.jays.model.User user = gson.fromJson(userRequestParams, com.jays.model.User.class);
+        //{\"userName\":\"jays\"}，因为json转译过程中 \" ==> ",所以在knife4j里传参数的话你要用"\替换
+//        com.jays.model.User user = JSONUtil.toBean(userRequestParams, com.jays.model.User.class);
+        log.info("333");
+        log.info("user类名字：{}",user.getUserName());
+        String usernameByPost = tempClient.getUserNameByPost(user);
+        return ResultUtils.success(usernameByPost);
     }
 }

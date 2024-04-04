@@ -1,6 +1,8 @@
 package com.example.apiplatform.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.apiplatform.common.ErrorCode;
@@ -54,6 +56,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         //md5且加盐给密码加密
         user.setUserPassword(DigestUtils.md5DigestAsHex((salt+password).getBytes()));
+        //分配 accessKey,secretKey;
+        String accessKey = DigestUtil.md5Hex(salt+account+ RandomUtil.randomNumbers(5));
+        String secretKey = DigestUtil.md5Hex(salt+account+ RandomUtil.randomNumbers(8));
+        user.setAccessKey(accessKey);
+        user.setSecretKey(secretKey);
         //保存进数据库
         boolean registerUser = this.save(user);
         if(!registerUser){

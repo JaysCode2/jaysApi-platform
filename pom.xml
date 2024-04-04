@@ -79,6 +79,14 @@
             <artifactId>jaysApi-client-sdk</artifactId>
             <version>0.0.1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.code./gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
