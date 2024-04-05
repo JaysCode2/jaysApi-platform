@@ -87,7 +87,7 @@ public class InterfaceInfoController {
         Long nowUserId = nowUser.getId();
         InterfaceInfo interfaceInfo = interfaceInfoService.getById(deleteRequest.getId());
         if(interfaceInfo == null){
-            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR,"要删除的书籍信息不存在");
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR,"要删除的接口信息不存在");
         }
         Long oldUserId = interfaceInfo.getUserId();
         //判断是否有权限,仅本人和管理员有权限删除
