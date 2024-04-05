@@ -41,6 +41,7 @@ public class NameController {
         if(!accessKeyHeader.equals(accessKeyMd5) || !secretKeyHeader.equals(secretKeyMd5)){
             throw new RuntimeException("无权限");
         }
-        return "Post 你的名字是"+user.getUserName();
+        String result = "Post 你的名字是"+user.getUserName();
+        return result;
     }
 }
