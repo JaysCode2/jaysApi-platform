@@ -47,17 +47,29 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         }
         // 鉴权，判断ak和sk,这个是应该放在网关的
         HttpHeaders headers = request.getHeaders();
-        String accessKey = keysConfig.getAccessKey();
+//        String accessKey = keysConfig.getAccessKey();
         String secretKey = keysConfig.getSecretKey();
         String accessKeyHeader = headers.getFirst("accessKey");
         String secretKeyHeader = headers.getFirst("secretKey");
-        String accessKeyMd5 = DigestUtils.md5DigestAsHex(accessKey.getBytes());
+        String timestamp = headers.getFirst("timestamp");
+//        String accessKeyMd5 = DigestUtils.md5DigestAsHex(accessKey.getBytes());
         String secretKeyMd5 = DigestUtils.md5DigestAsHex(secretKey.getBytes());
-        if(!accessKeyHeader.equals(accessKeyMd5) || !secretKeyHeader.equals(secretKeyMd5)){
+//        if(!accessKeyHeader.equals(accessKeyMd5) || !secretKeyHeader.equals(secretKeyMd5)){
+//            response.setStatusCode(HttpStatus.FORBIDDEN);
+//            return response.setComplete();
+//        }
+        if(!secretKeyHeader.equals(secretKeyMd5)){
             response.setStatusCode(HttpStatus.FORBIDDEN);
             return response.setComplete();
         }
-
+        //校验时间戳
+        // 时间和当前时间不能超过 5 分钟
+        Long currentTime = System.currentTimeMillis() / 1000;
+        final Long FIVE_MINUTES = 60 * 5L;
+        if ((currentTime - Long.parseLong(timestamp)) >= FIVE_MINUTES) {
+            response.setStatusCode(HttpStatus.FORBIDDEN);
+            return response.setComplete();
+        }
         // 5. 请求转发，调用模拟接口 + 响应日志
         Mono<Void> filter = chain.filter(exchange);
         return filter;

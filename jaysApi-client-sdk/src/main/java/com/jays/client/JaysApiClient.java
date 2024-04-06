@@ -44,10 +44,12 @@ public class JaysApiClient {
     public HashMap<String,String> getHeaderMap(){
         HashMap<String,String> map = new HashMap();
         // md5加密
-        String accessKeyMd5 = DigestUtils.md5DigestAsHex(accessKey.getBytes());
+//        String accessKeyMd5 = DigestUtils.md5DigestAsHex(accessKey.getBytes());
         String secretKeyMd5 = DigestUtils.md5DigestAsHex(secretKey.getBytes());
-        map.put("accessKey",accessKeyMd5);
+        map.put("accessKey",accessKey);
         map.put("secretKey",secretKeyMd5);
+        //传个时间戳，解决部分重放攻击
+        map.put("timestamp", String.valueOf(System.currentTimeMillis() / 1000));
         return map;
     }
 

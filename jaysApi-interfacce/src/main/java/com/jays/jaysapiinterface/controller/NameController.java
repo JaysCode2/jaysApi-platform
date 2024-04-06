@@ -32,15 +32,19 @@ public class NameController {
      */
     @PostMapping("/user")
     public String getUserNameByPost(@RequestBody User user, HttpServletRequest httpServletRequest){
-        String accessKey = "jays";
-        String secretKey = "abcd";
-        String accessKeyHeader = httpServletRequest.getHeader("accessKey");
-        String secretKeyHeader = httpServletRequest.getHeader("secretKey");
-        String accessKeyMd5 = DigestUtils.md5DigestAsHex(accessKey.getBytes());
-        String secretKeyMd5 = DigestUtils.md5DigestAsHex(secretKey.getBytes());
-        if(!accessKeyHeader.equals(accessKeyMd5) || !secretKeyHeader.equals(secretKeyMd5)){
-            throw new RuntimeException("无权限");
-        }
+
+        //begin，这些鉴权业务你觉得放在这合适吗
+        //不合适，所以我们后续要把鉴权放在网关层
+//        String accessKey = "jays";
+//        String secretKey = "abcd";
+//        String accessKeyHeader = httpServletRequest.getHeader("accessKey");
+//        String secretKeyHeader = httpServletRequest.getHeader("secretKey");
+//        String accessKeyMd5 = DigestUtils.md5DigestAsHex(accessKey.getBytes());
+//        String secretKeyMd5 = DigestUtils.md5DigestAsHex(secretKey.getBytes());
+//        if(!accessKeyHeader.equals(accessKeyMd5) || !secretKeyHeader.equals(secretKeyMd5)){
+//            throw new RuntimeException("无权限");
+//        }
+        //end
         String result = "Post 你的名字是"+user.getUserName();
         return result;
     }

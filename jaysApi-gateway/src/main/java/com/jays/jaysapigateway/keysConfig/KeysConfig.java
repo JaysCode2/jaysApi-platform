@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 //不知道为什么这个注解注入不进去
 //@ConfigurationProperties(prefix = "keys")
 public class KeysConfig {
-    @Value("${keys.accessKey}")
-    private String accessKey;
+//    @Value("${keys.accessKey}")
+//    private String accessKey;
 
     @Value("${keys.secretKey}")
     private String secretKey;
