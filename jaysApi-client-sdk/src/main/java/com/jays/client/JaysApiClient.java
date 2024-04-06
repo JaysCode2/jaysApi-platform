@@ -15,6 +15,8 @@ public class JaysApiClient {
     private String accessKey;
     private String secretKey;
 
+    private static final String GATEWAY_HOST = "http://localhost:8090";
+
     public JaysApiClient(String accessKey, String secretKey) {
         this.accessKey = accessKey;
         this.secretKey = secretKey;
@@ -23,7 +25,7 @@ public class JaysApiClient {
     public String getNameByGet(String name){
         HashMap<String, Object> paramMap = new HashMap();
         paramMap.put("name",name);
-        String result = HttpUtil.get("http://localhost:8123/api/name/1",paramMap);
+        String result = HttpUtil.get(GATEWAY_HOST+"/api/name/1",paramMap);
         System.out.println(result);
         return result;
     }
@@ -31,7 +33,7 @@ public class JaysApiClient {
     public String getNameByPost(String name){
         HashMap<String, Object> paramMap = new HashMap();
         paramMap.put("name",name);
-        String result = HttpUtil.post("http://localhost:8123/api/name/2",paramMap);
+        String result = HttpUtil.post(GATEWAY_HOST+"/api/name/2",paramMap);
         System.out.println(result);
         return result;
     }
@@ -56,7 +58,7 @@ public class JaysApiClient {
      */
     public String getUserNameByPost(User user){
         String userJson = JSONUtil.toJsonStr(user);
-        HttpResponse httpResponse = HttpRequest.post("http://localhost:8123/api/name/user")
+        HttpResponse httpResponse = HttpRequest.post(GATEWAY_HOST+"/api/name/user")
                 .addHeaders(getHeaderMap())
                         .body(userJson)
                                 .execute();

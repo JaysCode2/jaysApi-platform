@@ -1,0 +1,28 @@
+server:
+  port: 8090
+
+# gateway配置
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - AddResponseHeader=source, jays
+#        - AddRequestParameter=name, jays
+      routes:
+        - id: api_route
+          uri: http://localhost:8123
+          predicates:
+            - Path=/api/**
+# 日志配置,trace适合测试环境，实际上线环境得换
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+
+# 配置密钥
+keys:
+  accessKey: jays
+  secretKey: abcd
+
