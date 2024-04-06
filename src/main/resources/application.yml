@@ -1,6 +1,6 @@
 # 应用服务 WEB 访问端口
 server:
-  port: 8088
+  port: 8086
   servlet:
     context-path: /api
 spring:
@@ -29,9 +29,19 @@ mybatis-plus:
       logic-delete-value: 1 # \u903B\u8F91\u5DF2\u5220\u9664\u503C\uFF08\u9ED8\u8BA4\u4E3A 1\uFF09
       logic-not-delete-value: 0 # \u903B\u8F91\u672A\u5220\u9664\u503C\uFF08\u9ED8\u8BA4\u4E3A 0\uFF09
       id-type: assign_id
+
+# 这段配置仅供测试，实际应该根据登录用户获取对应的 ak、sk
 jays:
   client:
     access-key: jays
     secret-key: abcd
-
-
+## dubbo
+#dubbo:
+#  application:
+#    name: dubbo-springboot-demo-provider
+#  protocol:
+#    name: dubbo
+#    port: 22228
+#  registry:
+#    id: nacos-registry
+#    address: nacos://localhost:8848

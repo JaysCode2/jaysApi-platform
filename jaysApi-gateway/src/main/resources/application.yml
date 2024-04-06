@@ -27,3 +27,13 @@ keys:
     #  accessKey: jays
     secretKey: abcd
 
+#dubbo:
+#  application:
+#    name: dubbo-springboot-demo-provider
+#  protocol:
+#    name: dubbo
+#    port: 22227
+#  registry:
+#    id: nacos-registry
+#    address: nacos://localhost:8848
+

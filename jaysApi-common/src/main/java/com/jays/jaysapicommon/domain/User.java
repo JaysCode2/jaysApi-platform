@@ -1,50 +1,66 @@
-package com.example.apiplatform.domain;
+package com.jays.jaysapicommon.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.util.Date;
+
 /**
- * 用户调用接口关系
- * @TableName user_interface_info
+ * 用户
+ * @TableName user
  */
-@TableName(value ="user_interface_info")
+@TableName(value ="user")
 @Data
-public class UserInterfaceInfo implements Serializable {
+public class User implements Serializable {
     /**
-     * 主键
+     * id
      */
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
-     * 调用用户 id
+     * 用户昵称
      */
-    private Long userId;
+    private String userName;
 
     /**
-     * 接口 id
+     * 账号
      */
-    private Long interfaceInfoId;
+    private String userAccount;
 
     /**
-     * 总调用次数
+     * 用户头像
      */
-    private Integer totalNum;
+    private String userAvatar;
 
     /**
-     * 剩余调用次数
+     * 性别
      */
-    private Integer leftNum;
+    private Integer gender;
 
     /**
-     * 0-正常，1-禁用
+     * 用户角色：user / admin
      */
-    private Integer status;
+    private String userRole;
+
+    /**
+     * 密码
+     */
+    private String userPassword;
+
+    /**
+     * accessKey
+     */
+    private String accessKey;
+
+    /**
+     * secretKey
+     */
+    private String secretKey;
 
     /**
      * 创建时间
@@ -57,10 +73,11 @@ public class UserInterfaceInfo implements Serializable {
     private Date updateTime;
 
     /**
-     * 是否删除(0-未删, 1-已删)
+     * 是否删除
      */
     private Integer isDelete;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
 }

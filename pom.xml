@@ -104,6 +104,12 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+        <!--导入common-->
+        <dependency>
+            <groupId>com.jays</groupId>
+            <artifactId>jaysApi-common</artifactId>
+            <version>0.0.1</version>
+        </dependency>
 
     </dependencies>
     <dependencyManagement>

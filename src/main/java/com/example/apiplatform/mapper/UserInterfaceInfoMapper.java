@@ -1,7 +1,7 @@
 package com.example.apiplatform.mapper;
 
-import com.example.apiplatform.domain.UserInterfaceInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jays.jaysapicommon.domain.UserInterfaceInfo;
 
 /**
 * @author chenjiexiang

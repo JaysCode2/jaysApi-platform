@@ -1,9 +1,9 @@
 package com.example.apiplatform.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.apiplatform.domain.InterfaceInfo;
 import com.example.apiplatform.mapper.InterfaceInfoMapper;
 import com.example.apiplatform.service.InterfaceInfoService;
+import com.jays.jaysapicommon.domain.InterfaceInfo;
 import org.springframework.stereotype.Service;
 
 /**

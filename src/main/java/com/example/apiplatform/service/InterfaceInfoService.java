@@ -1,7 +1,7 @@
 package com.example.apiplatform.service;
 
-import com.example.apiplatform.domain.InterfaceInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jays.jaysapicommon.domain.InterfaceInfo;
 
 /**
 * @author chenjiexiang

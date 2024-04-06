@@ -4,10 +4,10 @@ import com.example.apiplatform.annotation.AuthCheck;
 import com.example.apiplatform.common.BaseResponse;
 import com.example.apiplatform.common.ErrorCode;
 import com.example.apiplatform.common.ResultUtils;
-import com.example.apiplatform.domain.User;
 import com.example.apiplatform.exception.BusinessException;
 import com.example.apiplatform.service.UserService;
 import com.example.apiplatform.vo.UserVo;
+import com.jays.jaysapicommon.domain.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

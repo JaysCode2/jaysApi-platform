@@ -1,7 +1,7 @@
 package com.example.apiplatform.service;
 
-import com.example.apiplatform.domain.UserInterfaceInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jays.jaysapicommon.domain.UserInterfaceInfo;
 
 /**
 * @author chenjiexiang

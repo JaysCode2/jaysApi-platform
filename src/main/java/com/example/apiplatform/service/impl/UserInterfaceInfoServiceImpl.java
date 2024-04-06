@@ -1,13 +1,12 @@
 package com.example.apiplatform.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.apiplatform.common.ErrorCode;
-import com.example.apiplatform.domain.UserInterfaceInfo;
 import com.example.apiplatform.exception.BusinessException;
 import com.example.apiplatform.service.UserInterfaceInfoService;
 import com.example.apiplatform.mapper.UserInterfaceInfoMapper;
+import com.jays.jaysapicommon.domain.UserInterfaceInfo;
 import org.springframework.stereotype.Service;
 
 /**

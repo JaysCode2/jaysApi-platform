@@ -1,13 +1,10 @@
 package com.example.apiplatform.controller;
 
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.apiplatform.annotation.AuthCheck;
 import com.example.apiplatform.common.*;
 import com.example.apiplatform.constant.CommonConstant;
-import com.example.apiplatform.domain.InterfaceInfo;
-import com.example.apiplatform.domain.User;
 import com.example.apiplatform.domain.dto.interfaceinfo.InterfaceInfoAddRequest;
 import com.example.apiplatform.domain.dto.interfaceinfo.InterfaceInfoInvokeRequest;
 import com.example.apiplatform.domain.dto.interfaceinfo.InterfaceInfoQueryRequest;
@@ -18,6 +15,8 @@ import com.example.apiplatform.service.InterfaceInfoService;
 import com.example.apiplatform.service.UserService;
 import com.google.gson.Gson;
 import com.jays.client.JaysApiClient;
+import com.jays.jaysapicommon.domain.InterfaceInfo;
+import com.jays.jaysapicommon.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;

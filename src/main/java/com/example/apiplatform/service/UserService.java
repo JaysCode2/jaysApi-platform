@@ -1,8 +1,8 @@
 package com.example.apiplatform.service;
 
-import com.example.apiplatform.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.apiplatform.vo.UserVo;
+import com.jays.jaysapicommon.domain.User;
 
 import javax.servlet.http.HttpServletRequest;
 

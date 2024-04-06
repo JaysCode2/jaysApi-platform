@@ -1,7 +1,7 @@
 package com.example.apiplatform.aop;
 
-import com.example.apiplatform.domain.User;
 import com.example.apiplatform.service.UserService;
+import com.jays.jaysapicommon.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
