@@ -23,6 +23,7 @@ logging:
 
 # 配置密钥
 keys:
-#  accessKey: jays
-  secretKey: abcd
+  client:
+    #  accessKey: jays
+    secretKey: abcd
 
