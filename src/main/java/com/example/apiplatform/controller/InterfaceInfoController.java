@@ -291,8 +291,10 @@ public class InterfaceInfoController {
         User loginUser = userService.getLoginUser(request);
         String accessKey = loginUser.getAccessKey();
         String secretKey = loginUser.getSecretKey();
-//        JaysApiClient tempClient = new JaysApiClient(accessKey, secretKey);
-        JaysApiClient tempClient = new JaysApiClient("jays", "abcd");
+        //这个为真是业务
+        JaysApiClient tempClient = new JaysApiClient(accessKey, secretKey);
+        //这个为为跑通流程测试用的
+//        JaysApiClient tempClient = new JaysApiClient("jays", "abcd");
         //gson可以，hutool也可以
         Gson gson = new Gson();
         com.jays.model.User user = gson.fromJson(userRequestParams, com.jays.model.User.class);
