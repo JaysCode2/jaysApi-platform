@@ -3,6 +3,7 @@ package com.jays.jaysapigateway;
 import com.jays.jaysapicommon.client.InterfaceInfoClient;
 import com.jays.jaysapicommon.client.UserClient;
 import com.jays.jaysapicommon.client.UserInterfaceClient;
+import com.jays.jaysapicommon.domain.InterfaceInfo;
 import com.jays.jaysapicommon.domain.User;
 import com.jays.jaysapigateway.keysConfig.KeysConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +64,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
 //        String accessKey = keysConfig.getAccessKey();
         //这是全数据库统一secretKey的校验方式，实际的话应该是分配给用户的secretKey
 //        String secretKey = keysConfig.getSecretKey();
+        //3. 校验secretKey
         User invokeUser = null;
         try {
             log.info("请求头中的accessKey+{}",accessKeyHeader);
@@ -70,6 +72,16 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         } catch (Exception e) {
             log.error("getInvokeUser error", e);
         }
+        //4. 校验接口是否存在
+        // 4. 请求的模拟接口是否存在，以及请求方法是否匹配
+        InterfaceInfo interfaceInfo = null;
+        log.info("=======================path={},method={}",path,method);
+        try {
+            interfaceInfo = interfaceInfoClient.getInterfaceInfo(path, method);
+        } catch (Exception e) {
+            log.error("getInterfaceInfo error", e);
+        }
+        log.info("interfaceInfo={}",interfaceInfo);
 //        log.info("请求头中的accessKey+{}",accessKeyHeader);
 //        invokeUser = userClient.getInvokeUser(accessKeyHeader);
 //        log.info("111111111111111InvokeUser={}",invokeUser);
@@ -84,7 +96,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
             response.setStatusCode(HttpStatus.FORBIDDEN);
             return response.setComplete();
         }
-        //4. 校验时间戳
+        //5. 校验时间戳
         // 时间和当前时间不能超过 5 分钟
         Long currentTime = System.currentTimeMillis() / 1000;
         final Long FIVE_MINUTES = 60 * 5L;
@@ -92,7 +104,16 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
             response.setStatusCode(HttpStatus.FORBIDDEN);
             return response.setComplete();
         }
-        // 5. 请求转发，调用模拟接口 + 响应日志
+
+        //调用成功，调用次数变动
+        // 6. 调用成功，接口调用次数 + 1 invokeCount
+        log.info("interfaceId={},invokeId={}",interfaceInfo.getId(), invokeUser.getId());
+        try {
+            userInterfaceClient.invokeCount(interfaceInfo.getId(), invokeUser.getId());
+        } catch (Exception e) {
+            log.error("invokeCount error", e);
+        }
+        // 7. 请求转发，调用模拟接口 + 响应日志
         Mono<Void> filter = chain.filter(exchange);
         return filter;
     }
