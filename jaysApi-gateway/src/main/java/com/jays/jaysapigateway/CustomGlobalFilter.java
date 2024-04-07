@@ -1,5 +1,9 @@
 package com.jays.jaysapigateway;
 
+import com.jays.jaysapicommon.client.InterfaceInfoClient;
+import com.jays.jaysapicommon.client.UserClient;
+import com.jays.jaysapicommon.client.UserInterfaceClient;
+import com.jays.jaysapicommon.domain.User;
 import com.jays.jaysapigateway.keysConfig.KeysConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -23,6 +27,12 @@ import java.util.List;
 public class CustomGlobalFilter implements GlobalFilter, Ordered {
     @Resource
     private KeysConfig keysConfig;
+    @Resource
+    private InterfaceInfoClient interfaceInfoClient;
+    @Resource
+    private UserClient userClient;
+    @Resource
+    private UserInterfaceClient userInterfaceClient;
     private static final List<String> IP_WHITE_LIST = Arrays.asList("127.0.0.1");
 
     private static final String INTERFACE_HOST = "http://localhost:8123";
@@ -45,13 +55,25 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
             response.setStatusCode(HttpStatus.FORBIDDEN);
             return response.setComplete();
         }
-        // 鉴权，判断ak和sk,这个是应该放在网关的
+        // 3. 鉴权，判断ak和sk,这个是应该放在网关的
         HttpHeaders headers = request.getHeaders();
-//        String accessKey = keysConfig.getAccessKey();
-        String secretKey = keysConfig.getSecretKey();
         String accessKeyHeader = headers.getFirst("accessKey");
         String secretKeyHeader = headers.getFirst("secretKey");
         String timestamp = headers.getFirst("timestamp");
+//        String accessKey = keysConfig.getAccessKey();
+        //这是全数据库统一secretKey的校验方式，实际的话应该是分配给用户的secretKey
+//        String secretKey = keysConfig.getSecretKey();
+        User invokeUser = null;
+        try {
+            log.info("请求头中的accessKey+{}",accessKeyHeader);
+            invokeUser = userClient.getInvokeUser(accessKeyHeader);
+        } catch (Exception e) {
+            log.error("getInvokeUser error", e);
+        }
+//        log.info("请求头中的accessKey+{}",accessKeyHeader);
+//        invokeUser = userClient.getInvokeUser(accessKeyHeader);
+//        log.info("111111111111111InvokeUser={}",invokeUser);
+        String secretKey = invokeUser.getSecretKey();
 //        String accessKeyMd5 = DigestUtils.md5DigestAsHex(accessKey.getBytes());
         String secretKeyMd5 = DigestUtils.md5DigestAsHex(secretKey.getBytes());
 //        if(!accessKeyHeader.equals(accessKeyMd5) || !secretKeyHeader.equals(secretKeyMd5)){
@@ -62,7 +84,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
             response.setStatusCode(HttpStatus.FORBIDDEN);
             return response.setComplete();
         }
-        //校验时间戳
+        //4. 校验时间戳
         // 时间和当前时间不能超过 5 分钟
         Long currentTime = System.currentTimeMillis() / 1000;
         final Long FIVE_MINUTES = 60 * 5L;
