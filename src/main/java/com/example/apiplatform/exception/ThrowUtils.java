@@ -1,6 +1,6 @@
 package com.example.apiplatform.exception;
 
-import com.example.apiplatform.common.ErrorCode;
+import com.jays.jaysapicommon.common.ErrorCode;
 
 
 /**

@@ -1,9 +1,9 @@
 package com.example.apiplatform.controller;
 
 import com.example.apiplatform.annotation.AuthCheck;
-import com.example.apiplatform.common.BaseResponse;
-import com.example.apiplatform.common.ErrorCode;
-import com.example.apiplatform.common.ResultUtils;
+import com.jays.jaysapicommon.common.BaseResponse;
+import com.jays.jaysapicommon.common.ErrorCode;
+import com.jays.jaysapicommon.common.ResultUtils;
 import com.example.apiplatform.exception.BusinessException;
 import com.example.apiplatform.service.UserService;
 import com.example.apiplatform.vo.UserVo;

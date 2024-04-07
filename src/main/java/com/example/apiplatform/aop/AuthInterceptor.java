@@ -1,7 +1,7 @@
 package com.example.apiplatform.aop;
 
 import com.example.apiplatform.annotation.AuthCheck;
-import com.example.apiplatform.common.ErrorCode;
+import com.jays.jaysapicommon.common.ErrorCode;
 import com.example.apiplatform.exception.BusinessException;
 import com.example.apiplatform.service.UserService;
 import com.jays.jaysapicommon.domain.User;

@@ -1,6 +1,6 @@
 package com.example.apiplatform.domain.dto.userinterfaceinfo;
 
-import com.example.apiplatform.common.PageRequest;
+import com.jays.jaysapicommon.common.PageRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -1,6 +1,6 @@
 package com.example.apiplatform.loginUtils;
 
-import com.example.apiplatform.common.ErrorCode;
+import com.jays.jaysapicommon.common.ErrorCode;
 import com.example.apiplatform.exception.BusinessException;
 import org.springframework.web.servlet.HandlerInterceptor;
 

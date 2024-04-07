@@ -19,7 +19,9 @@ public class MvcConfig implements WebMvcConfigurer {
                         "/doc.html/**",
                         "/swagger-resources/**",
                         "/**/v2/api-docs",
-                        "/webjars/**"
+                        "/webjars/**",
+                        //放行inner，openfeign要进行外部调用
+                        "/inner/**"
                 );
     }
 }

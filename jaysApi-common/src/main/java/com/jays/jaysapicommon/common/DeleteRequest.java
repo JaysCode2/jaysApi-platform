@@ -1,5 +1,4 @@
-package com.example.apiplatform.common;
-
+package com.jays.jaysapicommon.common;
 
 import lombok.Data;
 
@@ -7,9 +6,13 @@ import java.io.Serializable;
 
 /**
  * 删除请求
+ *
+ * @author 
+ * @from 
  */
 @Data
-public class IdRequest implements Serializable {
+public class DeleteRequest implements Serializable {
+
     /**
      * id
      */

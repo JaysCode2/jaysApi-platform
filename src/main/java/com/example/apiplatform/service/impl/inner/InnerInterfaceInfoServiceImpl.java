@@ -1,7 +1,7 @@
 package com.example.apiplatform.service.impl.inner;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.apiplatform.common.ErrorCode;
+import com.jays.jaysapicommon.common.ErrorCode;
 
 import com.example.apiplatform.exception.BusinessException;
 import com.example.apiplatform.mapper.InterfaceInfoMapper;

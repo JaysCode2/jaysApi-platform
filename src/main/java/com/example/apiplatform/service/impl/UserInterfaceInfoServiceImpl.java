@@ -2,7 +2,7 @@ package com.example.apiplatform.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.apiplatform.common.ErrorCode;
+import com.jays.jaysapicommon.common.ErrorCode;
 import com.example.apiplatform.exception.BusinessException;
 import com.example.apiplatform.service.UserInterfaceInfoService;
 import com.example.apiplatform.mapper.UserInterfaceInfoMapper;

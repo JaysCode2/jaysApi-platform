@@ -1,4 +1,4 @@
-package com.example.apiplatform.common;
+package com.jays.jaysapicommon.common;
 
 import lombok.Data;
 

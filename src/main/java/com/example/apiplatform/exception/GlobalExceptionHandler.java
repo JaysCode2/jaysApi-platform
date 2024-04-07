@@ -1,8 +1,8 @@
 package com.example.apiplatform.exception;
 
-import com.example.apiplatform.common.BaseResponse;
-import com.example.apiplatform.common.ErrorCode;
-import com.example.apiplatform.common.ResultUtils;
+import com.jays.jaysapicommon.common.BaseResponse;
+import com.jays.jaysapicommon.common.ErrorCode;
+import com.jays.jaysapicommon.common.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

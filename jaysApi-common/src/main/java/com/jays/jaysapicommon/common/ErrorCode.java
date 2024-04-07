@@ -1,4 +1,4 @@
-package com.example.apiplatform.common;
+package com.jays.jaysapicommon.common;
 
 /**
  * 自定义错误码
