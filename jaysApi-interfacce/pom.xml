@@ -48,6 +48,13 @@
             <artifactId>jaysApi-client-sdk</artifactId>
             <version>0.0.1</version>
         </dependency>
+
+        <!--导入common-->
+        <dependency>
+            <groupId>com.jays</groupId>
+            <artifactId>jaysApi-common</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>

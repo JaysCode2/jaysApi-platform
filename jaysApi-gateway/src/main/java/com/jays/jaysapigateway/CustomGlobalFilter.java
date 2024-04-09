@@ -106,7 +106,8 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         }
 
         //调用成功，调用次数变动
-        // 6. 调用成功，接口调用次数 + 1 invokeCount
+        // 6. 调用成功，接口调用次数 + 1 invokeCount，得先校验是否还有次数，这里就不开发这个了
+
         log.info("interfaceId={},invokeId={}",interfaceInfo.getId(), invokeUser.getId());
         try {
             userInterfaceClient.invokeCount(interfaceInfo.getId(), invokeUser.getId());

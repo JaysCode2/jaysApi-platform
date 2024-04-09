@@ -69,4 +69,15 @@ public class JaysApiClient {
         System.out.println(result);
         return result;
     }
+
+    //ai
+    public String sendQuestion(String question){
+        String userJson = JSONUtil.toJsonStr(question);
+        HttpResponse httpResponse = HttpRequest.get(GATEWAY_HOST+"/api/AiChat/sendQuestion")
+                .addHeaders(getHeaderMap())
+                .body(userJson)
+                .execute();
+        String result = httpResponse.body();
+        return result;
+    }
 }
